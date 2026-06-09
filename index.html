@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Umi Qoriah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #e8c98a;
+      --gold-dim: rgba(232,201,138,.15);
+      --gold-faint: rgba(232,201,138,.06);
+      --border: rgba(232,201,138,.15);
+      --text: #f5f0e8;
+      --text-dim: rgba(245,240,232,.5);
+      --text-faint: rgba(245,240,232,.3);
+      --bg: #0f0d0b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0; padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      cursor: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 0 20px;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 18px;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 10vw, 96px);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin: 0 0 20px;
+      background: linear-gradient(135deg, #f5f0e8 30%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: var(--text-dim);
+      margin-bottom: 50px;
+      max-width: 420px;
+    }
+
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 50px;
+    }
+
+    /* ── ORBIT ── */
+    .orbit-container {
+      position: relative;
+      width: 320px;
+      height: 320px;
+    }
+
+    .orbit-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--gold-faint);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--gold);
+      pointer-events: none;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      pointer-events: none;
+    }
+    .orbit-ring-1 { width: 220px; height: 220px; }
+    .orbit-ring-2 { width: 320px; height: 320px; animation: orbit-spin 40s linear infinite reverse; }
+
+    @keyframes orbit-spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .ob-item {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: rgba(15,13,11,.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 30px;
+      cursor: none;
+      white-space: nowrap;
+      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+    }
+
+    .ob-item:hover {
+      background: var(--gold-dim);
+      border-color: rgba(232,201,138,.5);
+      color: var(--gold);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    #c-dot {
+      position: fixed;
+      width: 5px; height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s;
+    }
+
+    #c-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1px solid rgba(232,201,138,.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+    }
+
+    /* ── MODAL ── */
+    .mo {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(10,8,6,.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .mo.open { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .md {
+      background: #161310;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      max-width: 540px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.3s ease;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .md h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--gold);
+      margin: 0 0 22px;
+    }
+
+    /* Close button */
+    .mc {
+      position: absolute;
+      top: 16px; right: 18px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      font-size: 13px;
+      cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .mc:hover { background: var(--gold-dim); color: var(--gold); }
+
+    /* Education card */
+    .ec {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ec:last-of-type { border-bottom: none; }
+
+    .ico {
+      font-size: 22px;
+      min-width: 36px;
+      height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--gold-faint);
+      border-radius: 8px;
+      margin-top: 2px;
+    }
+
+    .ec strong { font-size: 14px; display: block; margin-bottom: 2px; }
+    .ec small { font-size: 11px; color: var(--text-dim); display: block; margin-bottom: 6px; }
+    .ec p { font-size: 12.5px; color: var(--text-dim); margin: 0; line-height: 1.6; }
+
+    /* Section label */
+    .sl {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.6;
+      margin: 20px 0 10px;
+    }
+
+    /* Badge */
+    .bdg {
+      display: inline-block;
+      background: var(--gold-faint);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin: 3px 3px 3px 0;
+    }
+
+    /* Project card */
+    .pc {
+      background: var(--gold-faint);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .pc h3 { font-size: 14px; margin: 0 0 6px; }
+    .pc p  { font-size: 12.5px; color: var(--text-dim); margin: 0; line-height: 1.6; }
+
+    /* Gallery grid */
+    .gg {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .gs {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      background: var(--gold-faint);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .gs img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gs svg {
+      width: 28px; height: 28px;
+      stroke: rgba(232,201,138,.3);
+      fill: none;
+      stroke-width: 1;
+    }
+
+    .gs span {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.7));
+      font-size: 10px;
+      text-align: center;
+      padding: 8px 4px 4px;
+      color: var(--text-dim);
+    }
+
+    /* Contact row */
+    .cr {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cr-link { text-decoration: none; color: inherit; display: block; }
+    .cr-link:hover .cr { background: var(--gold-faint); border-color: rgba(232,201,138,.3); }
+
+    .ci { margin-right: 14px; font-size: 20px; }
+    .ci-info strong { font-size: 13px; }
+    .ci-info span { font-size: 11.5px; color: var(--text-dim); }
+    .cr svg { margin-left: auto; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    .footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 20px 60px;
+      font-size: 12px;
+      color: var(--text-faint);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+    }
+
+    /* scrollbar */
+    .md::-webkit-scrollbar { width: 4px; }
+    .md::-webkit-scrollbar-track { background: transparent; }
+    .md::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .orbit-container { width: 260px; height: 260px; }
+      .orbit-ring-1 { width: 170px; height: 170px; }
+      .orbit-ring-2 { width: 260px; height: 260px; }
+      .md { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Backgrounds -->
+<canvas id="silk" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none;"></canvas>
+<canvas id="dust" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;"></canvas>
+
+<!-- Custom cursor -->
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">Portfolio · Sistem Informasi</p>
+  <h1 class="hero-name">Umi Qoriah</h1>
+  <p class="hero-sub">Mahasiswi S1 Sistem Informasi · UNIKMA Cilacap<br>Pemrograman, UI/UX, dan Analisis Sistem</p>
+  <div class="hero-divider"></div>
+
+  <!-- Orbit menu -->
+  <div class="orbit-container">
+    <div class="orbit-ring orbit-ring-2"></div>
+    <div class="orbit-ring orbit-ring-1"></div>
+    <div class="orbit-center">✦</div>
+
+    <!-- 6 orbit buttons, positioned by JS -->
+    <button class="ob-item" id="ob0" onclick="openModal('edu')">Pendidikan</button>
+    <button class="ob-item" id="ob1" onclick="openModal('gallery')">Galeri</button>
+    <button class="ob-item" id="ob2" onclick="openModal('kontak')">Kontak</button>
+    <button class="ob-item" id="ob3" onclick="openModal('proyek')">Proyek</button>
+    <button class="ob-item" id="ob4" onclick="openModal('tentang')">Tentang Saya</button>
+    <a class="ob-item" id="ob5" href="https://qoriahumi9-lang.github.io/Proyekk/" target="_blank">Live Demo</a>
+  </div>
+</section>
+
+<!-- ── MODALS ── -->
+
+<!-- Modal: Pendidikan -->
+<div class="mo" id="modal-edu">
+  <div class="md">
+    <button class="mc" onclick="closeModal('edu')">✕</button>
+    <h2>✦ Pendidikan</h2>
+
+    <div class="ec">
+      <div class="ico">🏫</div>
+      <div>
+        <strong>SD Negeri 06</strong>
+        <small>Sekolah Dasar · Jenjang Pertama</small>
+        <p>Fondasi pertama membentuk karakter belajar. Lingkungan yang hangat menumbuhkan kedisiplinan, rasa percaya diri, dan kemandirian.</p>
+      </div>
+    </div>
+
+    <div class="ec">
+      <div class="ico">📗</div>
+      <div>
+        <strong>SMP AL-HIDAYAH Sidareja</strong>
+        <small>Sekolah Menengah Pertama · Sidareja</small>
+        <p>Tiga tahun belajar dan tumbuh bersama. Perjalanan penuh semangat dan rasa ingin tahu yang masih saya jaga erat.</p>
+      </div>
+    </div>
+
+    <div class="ec">
+      <div class="ico">🎒</div>
+      <div>
+        <strong>SMAN 1 Kedungreja</strong>
+        <small>Sekolah Menengah Atas · Kedungreja</small>
+        <p>Menjelajahi ilmu lebih dalam, mengembangkan potensi, dan mulai membentuk visi masa depan dengan semangat dan keberanian.</p>
+      </div>
+    </div>
+
+    <div class="ec">
+      <div class="ico">💻</div>
+      <div>
+        <strong>Universitas Komputama (UNIKMA) Cilacap</strong>
+        <small>S1 Sistem Informasi · Mahasiswi Aktif</small>
+        <p>Mendalami pemrograman, analisis sistem, basis data, rekayasa perangkat lunak, dan kecerdasan buatan.</p>
+      </div>
+    </div>
+
+    <div class="sl">Mata Kuliah Favorit</div>
+    <div>
+      <span class="bdg">Basis Data</span>
+      <span class="bdg">Pemrograman Web</span>
+      <span class="bdg">Analisis Sistem</span>
+      <span class="bdg">Kecerdasan Buatan</span>
+      <span class="bdg">UI/UX Design</span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Proyek -->
+<div class="mo" id="modal-proyek">
+  <div class="md">
+    <button class="mc" onclick="closeModal('proyek')">✕</button>
+    <h2>✦ Proyek</h2>
+    <p style="color:var(--text-faint);font-size:12px;margin-bottom:14px;">Proyek yang dikerjakan selama studi di UNIKMA Cilacap.</p>
+
+    <div class="pc"><h3>🏆 Sistem Informasi Jadwal Olahraga Sekolah</h3><p>Aplikasi web pengelola jadwal latihan, hasil pertandingan, dan data atlet. Dibangun dengan PHP, MySQL, dan Bootstrap.</p></div>
+    <div class="pc"><h3>📊 Dashboard Monitoring Prestasi Siswa</h3><p>Menampilkan data prestasi dalam grafik interaktif (Chart.js + PHP) untuk membantu guru memantau perkembangan siswa secara real-time.</p></div>
+    <div class="pc"><h3>🌐 Website Profil Sekolah Dinamis</h3><p>Website sekolah dengan CMS sederhana. Menampilkan info sekolah, berita, dan galeri kegiatan secara dinamis.</p></div>
+    <div class="pc"><h3>📱 Aplikasi Pencatat Latihan Harian</h3><p>Aplikasi mobile-first untuk mencatat aktivitas olahraga harian menggunakan HTML, CSS, JavaScript, dan Firebase.</p></div>
+    <div class="pc"><h3>🎨 Prototype UI/UX Portal Kampus</h3><p>Desain antarmuka portal informasi mahasiswa di Figma dengan UX Research dan high-fidelity prototype interaktif.</p></div>
+
+    <div class="sl">Teknologi yang Digunakan</div>
+    <div>
+      <span class="bdg">PHP</span><span class="bdg">MySQL</span><span class="bdg">JavaScript</span>
+      <span class="bdg">Bootstrap</span><span class="bdg">Figma</span><span class="bdg">Firebase</span>
+      <span class="bdg">Chart.js</span><span class="bdg">CodeIgniter</span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Galeri -->
+<div class="mo" id="modal-gallery">
+  <div class="md">
+    <button class="mc" onclick="closeModal('gallery')">✕</button>
+    <h2>✦ Galeri Pengalaman</h2>
+    <p style="color:var(--text-faint);font-size:12.5px;margin-bottom:14px;">Momen berharga dalam perjalanan saya.</p>
+
+    <div class="gg">
+      <div class="gs"><img src="IMG-20260123-WA0016.jpg" alt="Olahraga" onerror="this.style.display='none'"><span>Olahraga</span></div>
+      <div class="gs"><img src="IMG-20260123-WA0015.jpg" alt="Prestasi" onerror="this.style.display='none'"><span>Prestasi</span></div>
+      <div class="gs"><img src="IMG-20260121-WA0000.jpg" alt="Kampus" onerror="this.style.display='none'"><span>Kampus</span></div>
+      <div class="gs"><img src="IMG-20251222-WA0020.jpg" alt="Kegiatan" onerror="this.style.display='none'"><span>Kegiatan</span></div>
+      <div class="gs"><img src="IMG-20251222-WA0017.jpg" alt="Teman" onerror="this.style.display='none'"><span>Teman</span></div>
+      <div class="gs">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>Kenangan</span>
+      </div>
+    </div>
+
+    <div class="sl" style="margin-top:20px;">Prestasi Olahraga</div>
+    <div class="pc"><h3>🏐 Voli</h3><p>Meraih sertifikat dan piala dalam kompetisi voli tingkat sekolah. Aktif melatih teman sekelas teknik dasar voli.</p></div>
+    <div class="pc"><h3>⚽ Futsal</h3><p>Aktif dalam turnamen futsal antar sekolah, berkontribusi nyata dalam kerja tim.</p></div>
+    <div class="pc"><h3>🏸 Badminton</h3><p>Menjuarai pertandingan badminton tingkat sekolah dan mendapat penghargaan dari pihak sekolah.</p></div>
+    <div class="pc"><h3>🏃 Lari</h3><p>Aktif dalam lomba lari, mengembangkan ketahanan fisik serta mental melalui latihan rutin.</p></div>
+  </div>
+</div>
+
+<!-- Modal: Kontak -->
+<div class="mo" id="modal-kontak">
+  <div class="md">
+    <button class="mc" onclick="closeModal('kontak')">✕</button>
+    <h2>✦ Hubungi Saya</h2>
+    <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Ingin berkolaborasi, berdiskusi, atau sekadar menyapa? Jangan ragu untuk menghubungi saya!</p>
+
+    <a class="cr-link" href="https://wa.me/6283134002150" target="_blank">
+      <div class="cr">
+        <div class="ci">📱</div>
+        <div class="ci-info"><strong>WhatsApp</strong><br><span>083134002150</span></div>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(232,201,138,.4)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <a class="cr-link" href="mailto:qoriahumi385@gmail.com" target="_blank">
+      <div class="cr">
+        <div class="ci">📧</div>
+        <div class="ci-info"><strong>Email</strong><br><span>qoriahumi385@gmail.com</span></div>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(232,201,138,.4)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(232,201,138,.5);font-size:13.5px;margin-top:20px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--gold-faint);">
+      Umi Qoriah · Mahasiswi Sistem Informasi<br>
+      <span style="font-size:11.5px;color:var(--text-faint);">UNIKMA Cilacap</span>
+    </p>
+  </div>
+</div>
+
+<!-- Modal: Tentang Saya -->
+<div class="mo" id="modal-tentang">
+  <div class="md">
+    <button class="mc" onclick="closeModal('tentang')">✕</button>
+    <h2>✦ Tentang Saya</h2>
+    <p style="font-size:13.5px;line-height:1.75;color:var(--text-dim);">
+      Halo! Saya <strong style="color:var(--text);">Umi Qoriah</strong>, mahasiswi aktif S1 Sistem Informasi di Universitas Komputama (UNIKMA) Cilacap. Saya memiliki ketertarikan mendalam pada pengembangan web, desain antarmuka, dan analisis sistem.
+    </p>
+    <p style="font-size:13.5px;line-height:1.75;color:var(--text-dim);margin-top:10px;">
+      Di luar akademik, saya aktif dalam berbagai kegiatan olahraga — mulai dari voli, futsal, badminton, hingga lari. Saya percaya bahwa semangat yang sama dalam olahraga juga membentuk cara saya dalam menyelesaikan tantangan teknologi: dengan fokus, ketekunan, dan kerja tim.
+    </p>
+    <div class="sl">Keahlian</div>
+    <div>
+      <span class="bdg">HTML & CSS</span><span class="bdg">JavaScript</span><span class="bdg">PHP</span>
+      <span class="bdg">MySQL</span><span class="bdg">Figma</span><span class="bdg">Bootstrap</span>
+      <span class="bdg">UI/UX Research</span><span class="bdg">Analisis Sistem</span>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 16px;"></div>
+  Umi Qoriah &nbsp;·&nbsp; UNIKMA Cilacap &nbsp;·&nbsp; 2026
+</footer>
+
+<script>
+/* ── ORBIT POSITIONING ── */
+
+<script>
+/* ── ORBIT POSITIONING ── */
+(function(){
+  const items = document.querySelectorAll('.ob-item');
+  const container = document.querySelector('.orbit-container');
+  const radii = [110, 110, 110, 110, 160, 160];
+  const angleOffsets = [270, 30, 150, 210, 330, 90]; // degrees
+
+  function positionItems() {
+    const cx = container.offsetWidth / 2;
+    const cy = container.offsetHeight / 2;
+    items.forEach((el, i) => {
+      const angle = (angleOffsets[i] * Math.PI) / 180;
+      const r = radii[i];
+      const x = cx + r * Math.cos(angle);
+      const y = cy + r * Math.sin(angle);
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+    });
+  }
+  positionItems();
+  window.addEventListener('resize', positionItems);
+})();
+
+/* ── MODAL ── */
+function openModal(id) {
+  document.querySelectorAll('.mo').forEach(m => m.classList.remove('open'));
+  const el = document.getElementById('modal-' + id);
+  if (el) el.classList.add('open');
+}
+
+function closeModal(id) {
+  const el = document.getElementById('modal-' + id);
+  if (el) el.classList.remove('open');
+}
+
+// Close on backdrop click
+document.querySelectorAll('.mo').forEach(mo => {
+  mo.addEventListener('click', function(e) {
+    if (e.target === mo) {
+      mo.classList.remove('open');
+    }
+  });
+});
+
+// Close on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.mo.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+/* ── CUSTOM CURSOR ── */
+const cd = document.getElementById('c-dot');
+const cr = document.getElementById('c-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cd.style.left = mx + 'px';
+  cd.style.top  = my + 'px';
+});
+
+document.querySelectorAll('button, a, .ob-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cr.style.width  = '44px';
+    cr.style.height = '44px';
+    cr.style.borderColor = 'rgba(232,201,138,.8)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cr.style.width  = '32px';
+    cr.style.height = '32px';
+    cr.style.borderColor = 'rgba(232,201,138,.4)';
+  });
+});
+
+(function ringLoop() {
+  rx += (mx - rx) * 0.1;
+  ry += (my - ry) * 0.1;
+  cr.style.left = rx + 'px';
+  cr.style.top  = ry + 'px';
+  requestAnimationFrame(ringLoop);
+})();
+
+/* ── SILK WAVE BACKGROUND ── */
+(function() {
+  const cv = document.getElementById('silk');
+  if (!cv) return;
+  const cx = cv.getContext('2d');
+  let W, H, t = 0;
+
+  const resize = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
+  window.addEventListener('resize', resize);
+  resize();
+
+  const waves = [
+    { freq: 0.0012, amp: 38, phase: 0,   spd: 0.00035, oa: 0.032, rgb: '232,201,138' },
+    { freq: 0.0018, amp: 26, phase: 1.4, spd: 0.00055, oa: 0.022, rgb: '201,132,122' },
+    { freq: 0.0009, amp: 52, phase: 2.8, spd: 0.00025, oa: 0.018, rgb: '122,158,138' },
+    { freq: 0.0022, amp: 18, phase: 0.7, spd: 0.00070, oa: 0.028, rgb: '232,201,138' },
+    { freq: 0.0014, amp: 32, phase: 3.5, spd: 0.00042, oa: 0.015, rgb: '201,132,122' },
+    { freq: 0.0008, amp: 60, phase: 5.1, spd: 0.00018, oa: 0.012, rgb: '122,158,138' },
+  ];
+
+  function draw() {
+    cx.fillStyle = '#0f0d0b';
+    cx.fillRect(0, 0, W, H);
+
+    const vg = cx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.8);
+    vg.addColorStop(0, 'transparent');
+    vg.addColorStop(1, 'rgba(0,0,0,.5)');
+    cx.fillStyle = vg;
+    cx.fillRect(0, 0, W, H);
+
+    waves.forEach((w, i) => {
+      const yBase = H * (0.1 + i * 0.14);
+
+      cx.beginPath();
+      for (let x = 0; x <= W; x += 2) {
+        const y = yBase + w.amp * Math.sin(w.freq * x + t * w.spd * 1000 + w.phase);
+        x === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+      }
+      const grad = cx.createLinearGradient(0, yBase - w.amp, 0, yBase + w.amp);
+      grad.addColorStop(0,   `rgba(${w.rgb},0)`);
+      grad.addColorStop(0.5, `rgba(${w.rgb},${w.oa})`);
+      grad.addColorStop(1,   `rgba(${w.rgb},0)`);
+      cx.strokeStyle = grad;
+      cx.lineWidth = 1.5;
+      cx.stroke();
+
+      cx.beginPath();
+      for (let x = 0; x <= W; x += 2) {
+        const y = yBase + w.amp * 0.4 * Math.sin(w.freq * 2.3 * x + t * w.spd * 750 + w.phase + Math.PI);
+        x === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+      }
+      cx.strokeStyle = `rgba(${w.rgb},${w.oa * 0.4})`;
+      cx.lineWidth = 0.8;
+      cx.stroke();
+    });
+
+    t++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── DUST PARTICLES ── */
+(function() {
+  const cv = document.getElementById('dust');
+  if (!cv) return;
+  const cx = cv.getContext('2d');
+  let W, H;
+
+  const resize = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; initDust(); };
+  window.addEventListener('resize', resize);
+
+  const N = 80;
+  const dust = [];
+
+  function initDust() {
+    dust.length = 0;
+    for (let i = 0; i < N; i++) {
+      dust.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.2 + 0.3,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.12 - 0.06,
+        a: Math.random() * 0.35 + 0.05,
+        flicker: Math.random() * Math.PI * 2,
+      });
+    }
+  }
+
+  resize();
+
+  function drawDust() {
+    cx.clearRect(0, 0, W, H);
+    dust.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.flicker += 0.02;
+
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+
+      const alpha = p.a * (0.7 + 0.3 * Math.sin(p.flicker));
+      cx.beginPath();
+      cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      cx.fillStyle = `rgba(232,201,138,${alpha})`;
+      cx.fill();
+    });
+    requestAnimationFrame(drawDust);
+  }
+  drawDust();
+})();
+</script>
+</body>
+</html>
